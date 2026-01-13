@@ -12,7 +12,7 @@ function App() {
           Your Phone Number:
           <input type="number" name="phone-number"/>
         </label>
-        <button class="btn">Sign up</button>
+        <button class="btn" id="sign-up-btn" onClick={() => alert("signed up!")}>Sign up</button>
       </div>
     </>
   )
