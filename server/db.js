@@ -9,5 +9,7 @@ const connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) throw err;
-    console.log("Connenction is secure");
+
+    console.log("Connection is secure");
 });
+
