@@ -3,6 +3,8 @@ import "./index.css";
 
 function App() {
   const [phone, setPhone] = useState("");
+  const [zip, setzip] = useState("");
+
   const [status, setStatus] = useState(null);
 
   const handleSubmit = async () => {
@@ -36,12 +38,26 @@ function App() {
               type="tel"
             />
           </label>
+          <br></br><br></br><br></br>
+          <label>
+            Enter Zip Code:
+            <input
+              id="zip"
+              value={zip}
+              onChange={(e) => setZip(e.target.value)}
+              type="text"
+            />
+          </label>
+        {status && <p>{status}</p>}
         </div>
         <button className="btn" onClick={handleSubmit}>
           Sign up
         </button>
         {status && <p>{status}</p>}
       </div>
+
+
+
     </>
   );
 }
