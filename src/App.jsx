@@ -6,7 +6,9 @@ function App() {
   const [status, setStatus] = useState(null);
   const [long, setLong] = useState(0);
   const [lat, setLat] = useState(0);
-
+  const[locError,setLocError] = useState(null);
+  const [locationText, setLocationText] = useState("");
+  let locationErrorMessage = null;
   const handleSubmit = async () => {
     if (!phone.trim()) return;
     try {
@@ -35,7 +37,6 @@ function App() {
     }
   }
 
-  const x = document.getElementById("location")
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -45,18 +46,24 @@ function App() {
     }
   }
 
+  function error(err) {
+    setLocError("Unable to output weather without location!");
+  }
+  if (locError) {
+    locationErrorMessage = <p className="error">{locError}</p>;
+  }
   function success(position) {
     console.log(position.coords.latitude);
-    console.log(position.coords.longitude);
-    setLat(position.coords.latitude);
-    setLong(position.coords.longitude);
-    x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude;
+    const { latitude, longitude } = position.coords;
+    
+    setLat(latitude);
+    setLong(longitude);
+    
+    setLocationText(
+      `Latitude: ${latitude}, Longitude: ${longitude}`
+    );
   }
 
-  function error() {
-    alert("Sorry, no position available.");
-  }
   return (
     <>
       <h1><span>Defrost</span></h1>
@@ -72,14 +79,16 @@ function App() {
             />
           </label>
         </div>
-        <button className="btn" onClick={getLocation}>
-          Get Location
-        </button>
-        <p id="location">Location:</p>
         <button className="btn" onClick={handleSubmit}>
           Sign up
         </button>
         {status && <p>{status}</p>}
+        <br></br>
+        <button className="btn" onClick={getLocation}>
+          Get Location
+        </button> 
+        {<p className="error">{locationErrorMessage}</p>}
+        <p>{locationText}</p>
       </div>
     </>
   );
