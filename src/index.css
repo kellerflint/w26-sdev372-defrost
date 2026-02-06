@@ -1,7 +1,7 @@
 body {
   margin: 0;
   /* background: #293642; */
-  background: linear-gradient(#293642, #181e28);
+  background: linear-gradient(#4f7090, #353d4a);
   background-repeat: no-repeat;
   min-height: 100vh;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -42,14 +42,14 @@ input {
   font-family: inherit;
   font-weight: bold;
   color: white;
-  background: rgb(49, 122, 42);
+  background: rgb(42, 79, 122);
   border: none;
   border-radius: 5px;
   cursor:pointer;
 }
 
 .btn:hover {
-  background: rgb(40, 99, 34);
+  background: rgb(0, 247, 255);
 }
 
 h1 span {
@@ -58,4 +58,8 @@ h1 span {
   border-radius: 10px;
   padding: 0px 15px;
   box-shadow: 0 0 2px #121212;
+}
+#userPrompt{
+  font-size: 20px;
+  font-family: "Times New Roman", Times, serif;  
 }

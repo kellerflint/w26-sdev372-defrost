@@ -41,7 +41,7 @@ function App() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, error);
     } else { 
-      alert("Geolocation is not supported by this browser.");
+      alert("Error Geolocation is not supported by this browser.");
     }
   }
 
@@ -62,7 +62,7 @@ function App() {
       <h1><span>Defrost</span></h1>
       <div className="register">
         <div class="phone-input">
-          <label htmlFor="phone-number">
+          <label htmlFor="phone-number" id="userPrompt">
             Enter a Phone Number:
             <input
               id="phone-number"
