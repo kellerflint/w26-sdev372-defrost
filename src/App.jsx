@@ -62,6 +62,7 @@ function App() {
     setLocationText(
       `Latitude: ${latitude}, Longitude: ${longitude}`
     );
+    setLocError(null); 
   }
 
   return (
