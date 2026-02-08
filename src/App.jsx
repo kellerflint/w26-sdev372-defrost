@@ -4,10 +4,15 @@ import "./index.css";
 function App() {
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState(null);
-
+  const [long, setLong] = useState(0);
+  const [lat, setLat] = useState(0);
+  const[locError,setLocError] = useState(null);
+  const [locationText, setLocationText] = useState("");
+  let locationErrorMessage = null;
   const handleSubmit = async () => {
     if (!phone.trim()) return;
     try {
+      locationWeather();
       const res = await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -22,12 +27,50 @@ function App() {
     }
   };
 
+  const locationWeather = async () => {
+    try {
+      const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&hourly=temperature_2m&current=temperature_2m&forecast_days=3&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`);
+      const body = await res.json();
+      console.log(body);
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else { 
+      alert("Error Geolocation is not supported by this browser.");
+    }
+  }
+
+  function error(err) {
+    setLocError("Unable to output weather without location!");
+  }
+  if (locError) {
+    locationErrorMessage = <p className="error">{locError}</p>;
+  }
+  function success(position) {
+    console.log(position.coords.latitude);
+    const { latitude, longitude } = position.coords;
+    
+    setLat(latitude);
+    setLong(longitude);
+    
+    setLocationText(
+      `Latitude: ${latitude}, Longitude: ${longitude}`
+    );
+    setLocError(null); 
+  }
+
   return (
     <>
       <h1><span>Defrost</span></h1>
       <div className="register">
         <div class="phone-input">
-          <label htmlFor="phone-number">
+          <label htmlFor="phone-number" id="userPrompt">
             Enter a Phone Number:
             <input
               id="phone-number"
@@ -41,6 +84,12 @@ function App() {
           Sign up
         </button>
         {status && <p>{status}</p>}
+        <br></br>
+        <button className="btn" onClick={getLocation}>
+          Get Location
+        </button> 
+        {<p className="error">{locationErrorMessage}</p>}
+        <p>{locationText}</p>
       </div>
     </>
   );
